@@ -1,33 +1,30 @@
-NAME = so_long.a
-LIBFTNAME = libft.a
+NAME = so_long
+LIBFT = libft/libft.a
 LIBFTDIR = ./libft
-SRC = so_long.c
+SRC_DIR = src
+SRC = $(wildcard $(SRC_DIR)/*.c) # Get all .c files from src/
 OBJS := $(SRC:%.c=%.o)
 CC = cc
 CCFLAGS = -Wall -Werror -Wextra
 
 all: $(NAME)
 
-makelibft:
+$(LIBFT):
 	make -C $(LIBFTDIR)
-	cp $(LIBFTDIR)/$(LIBFTNAME) .
-	mv $(LIBFTNAME) $(NAME)
 
-$(NAME) : makelibft $(OBJS)
-	ar rcs $(NAME) $(OBJS)
-	ranlib $(NAME)
-	$(CC) $(OBJS) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(OBJS) $(LIBFT) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
 
 %.o: %.c
-	$(CC) $(CCFLAGS) -I/usr/include -Imlx_linux -O3 -o $@ -c $<
+	$(CC) $(CCFLAGS) -I/usr/include -Imlx_linux -Ilibft -o $@ -c $<
 
 clean:
 	rm -f $(OBJS)
-	cd $(LIBFTDIR) && make clean
+	make -C $(LIBFTDIR) clean
 
 fclean: clean
 	rm -f $(NAME)
-	cd $(LIBFTDIR) && make fclean
+	make -C $(LIBFTDIR) fclean
 
 re: fclean all
 

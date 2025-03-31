@@ -8,4 +8,6 @@
 #include <stdlib.h>
 #include <mlx.h>
 
+char **parse_map(int map_fd);
+
 #endif
