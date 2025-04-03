@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <mlx.h>
 
-char **parse_map(int map_fd);
+char **parse_map(int map_fd, const char *filename);
+int open_file(const char *filename);
 
 #endif

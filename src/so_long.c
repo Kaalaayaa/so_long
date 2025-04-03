@@ -34,46 +34,6 @@
 // }
 #include "../so_long.h"
 
-// int open_file(const char *filename)
-// {
-//     int	fd;
-
-// 	fd = open(filename, O_RDONLY);
-// 	if(fd == -1)
-// 	{
-// 		perror("Error when opening map file");
-// 		return(-1);
-// 	}
-// 	return(fd);
-// }
-
-// int *get_map_size(int map)
-// {
-// 	int	*size;
-// 	char *line;
-// 	int rows = 0;
-// 	int cols = 0;
-
-// 	size = malloc(2 * sizeof(int)); // [rows, cols]
-// 	if(!size)
-// 		return(NULL);
-	
-// 	while (1)
-// 	{
-// 		line = get_next_line(map);
-// 		if(line == NULL)
-// 			break;
-// 		rows++;
-// 		cols = ft_strlen(line);
-// 		//printf("[%d]: %s\n", rows, line);
-//         free(line);
-// 	}
-// 	size[0] = rows; // rows
-// 	size[1] = cols; // cols
-
-// 	return (size);
-// }
-
 int open_file(const char *filename)
 {
     int	fd;
@@ -95,19 +55,16 @@ int main(int argc, char **argv)
         return (1);
     }
 	int map_fd = open_file(argv[1]);
-	//printf("fd map: %d\n", map);
-	//int *size = get_map_size(map);
-	//int map_array[size[0]][size[1]];
-	char **parsed_map = parse_map(map_fd);
-	//free(size);
+	char **parsed_map = parse_map(map_fd, argv[1]);
 	//printf("size row:%d, col:%d", size[0], size[1]);
 	int i = 0;
-	while (parsed_map[i]) // Iterate through rows
-	{
-    	printf("%s\n", parsed_map[i]); // Print the whole row
-		free(parsed_map);
-    	i++;
-	}
+	while (parsed_map[i])  // Iterate until NULL (if you NULL-terminated)
+		{
+			printf("%s\n", parsed_map[i]);
+			free(parsed_map[i]);
+			i++;
+		}
+	free(parsed_map);
 	close(map_fd);
 	return (0);
 }
