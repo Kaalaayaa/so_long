@@ -1,6 +1,6 @@
 NAME = libft.a  
 SRC = get_next_line_utils.c\
-	  get_next_line.c #Variable containing all .c files required to build the project
+	  get_next_line.c ft_strdup.c ft_strlcpy.c ft_memcpy.c #Variable containing all .c files required to build the project
 OBJS := $(SRC:%.c=%.o) #Converts all c files in SRC to object files. Using := ensures that this transformation happens once
 CC = cc #compiler
 CCFLAGS = -Wall -Werror -Wextra #compiler flags

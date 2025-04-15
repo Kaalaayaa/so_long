@@ -7,16 +7,28 @@ OBJS := $(SRC:%.c=%.o)
 CC = cc
 CCFLAGS = -Wall -Werror -Wextra
 
+# MiniLibX
+MLX_DIR = mlx # Path to your mlx folder
+MLX_FLAGS = -I$(MLX_DIR) -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+
 all: $(NAME)
 
 $(LIBFT):
 	make -C $(LIBFTDIR)
 
+
+#(NAME): $(OBJS) $(LIBFT)
+#	$(CC) $(OBJS) $(LIBFT) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+
+#%.o: %.c
+#	$(CC) $(CCFLAGS) -I/usr/include -Imlx_linux -Ilibft -o $@ -c $<
+
+#MAC VERSIONls
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(OBJS) $(LIBFT) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+	$(CC) $(OBJS) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
 
 %.o: %.c
-	$(CC) $(CCFLAGS) -I/usr/include -Imlx_linux -Ilibft -o $@ -c $<
+	$(CC) $(CCFLAGS) -I$(LIBFTDIR) -I$(MLX_DIR) -o $@ -c $<
 
 clean:
 	rm -f $(OBJS)
